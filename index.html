@@ -61,7 +61,7 @@
       <figure><img src="assets/images/tools.jpg" width="1000" height="667" loading="lazy" alt="Садовые инструменты на деревянной скамейке"><figcaption><b>Подготовить инструменты</b><span>Выбираем подходящий инвентарь для работы во дворе.</span></figcaption></figure>
     </div><p class="photo-credit">Иллюстративные фотографии: Anna Shvets, Greta Hoffman, Gary Barnes / <a href="https://www.pexels.com/license/">Pexels</a>.</p></div></section>
     <section id="events" class="events"><div class="wrap events-grid"><div><div class="eyebrow">Календарь</div><h2>Встречаемся<br>в городе</h2><p>Выбирайте событие по душе. Перед встречей мы отправим напоминание и список того, что пригодится.</p></div><div><article class="event"><div class="date"><b>12</b>ОКТ</div><div><h3>Осенняя посадка во дворе</h3><p>11:00 · Московский район · перчатки и инвентарь дадим на месте</p></div><a class="button alt" href="#join">Записаться</a></article><article class="event"><div class="date"><b>19</b>ОКТ</div><div><h3>Открытая лекция «Сад на балконе»</h3><p>18:30 · аудитория 402 · для новичков</p></div><a class="button alt" href="#join">Записаться</a></article><article class="event"><div class="date"><b>26</b>ОКТ</div><div><h3>Мастерская идей для двора</h3><p>14:00 · коворкинг · принесите фотографии своего двора</p></div><a class="button alt" href="#join">Записаться</a></article></div></div></section>
-    <section id="join"><div class="wrap join-grid"><div><div class="eyebrow">Первый шаг</div><h2>Давайте сделаем район зеленее</h2><p>Оставьте контакт — координатор напишет вам о ближайшей встрече. Это демонстрационная форма: данные не отправляются.</p><p><b>Подходит, если вы:</b><br>хотите познакомиться с единомышленниками;<br>ищете практический эко-проект;<br>готовы выделить пару часов в месяц.</p></div><form id="join-form"><h3>Хочу участвовать</h3><label for="name">Имя</label><input id="name" required placeholder="Например, Лена"><label for="contact">Почта или Telegram</label><input id="contact" required placeholder="Как с вами связаться"><label for="interest">Что интересно?</label><select id="interest"><option>Посадки и уход</option><option>Идеи и проектирование</option><option>Лекции и встречи</option></select><button class="button" type="submit">Отправить заявку</button><p id="form-message" aria-live="polite"></p></form></div></section>
+    <section id="join"><div class="wrap join-grid"><div><div class="eyebrow">Первый шаг</div><h2>Давайте сделаем район зеленее</h2><p>Оставьте контакт — координатор напишет вам о ближайшей встрече. Это демонстрационная форма: данные не отправляются.</p><p><b>Подходит, если вы:</b><br>хотите познакомиться с единомышленниками;<br>ищете практический эко-проект;<br>готовы выделить пару часов в месяц.</p></div><form id="join-form"><h3>Хочу участвовать</h3><label for="name">Имя</label><input id="name" autocomplete="given-name" maxlength="80" required placeholder="Например, Лена"><label for="contact">Почта или Telegram</label><input id="contact" maxlength="254" aria-describedby="contact-hint" required placeholder="name@example.ru или @username"><small id="contact-hint">Почта или Telegram: @ и от 5 до 32 символов.</small><label for="interest">Что интересно?</label><select id="interest"><option>Посадки и уход</option><option>Идеи и проектирование</option><option>Лекции и встречи</option></select><button class="button" type="submit">Отправить заявку</button><p id="form-message" aria-live="polite"></p></form></div></section>
   </main>
   <footer><div class="wrap foot"><span class="brand"><span class="mark"></span>ГОРОДСКОЙ САД</span><span>Учимся заботиться о городе вместе · 2026</span><div class="social"><a href="#top">VK</a><a href="#top">Telegram</a></div></div></footer>
   <script>
@@ -72,7 +72,21 @@
     siteNav.addEventListener('click', event => { if(event.target.closest('a')) closeMenu(); });
     document.addEventListener('keydown', event => { if(event.key === 'Escape') { closeMenu(); if(document.activeElement.closest('#site-nav')) menuToggle.focus(); } });
 
-    document.getElementById('join-form').addEventListener('submit', function(e) { e.preventDefault(); document.getElementById('form-message').textContent = 'Спасибо! Демонстрационная заявка принята.'; this.reset(); });
+    const form = document.getElementById('join-form');
+    const nameField = document.getElementById('name');
+    const contactField = document.getElementById('contact');
+    const formMessage = document.getElementById('form-message');
+    [nameField,contactField].forEach(field => field.addEventListener('input', () => { field.setCustomValidity(''); formMessage.textContent = ''; }));
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      nameField.setCustomValidity(nameField.value.trim() ? '' : 'Введите имя, а не пробелы.');
+      const contact = contactField.value.trim();
+      const validContact = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact) || /^@[A-Za-z][A-Za-z0-9_]{4,31}$/.test(contact);
+      contactField.setCustomValidity(validContact ? '' : 'Введите почту или Telegram в формате @username (5–32 символа).');
+      if(!form.reportValidity()) return;
+      formMessage.textContent = 'Спасибо! Поля заполнены верно. Это демонстрация: данные никуда не отправлены.';
+      form.reset();
+    });
   </script>
 </body>
 </html>
