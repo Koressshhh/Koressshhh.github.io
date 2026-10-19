@@ -22,10 +22,27 @@
     .join-grid { display:grid; grid-template-columns:1fr .85fr; gap:54px; align-items:center; } form { padding:28px; border-radius:22px; background:var(--paper); border:1px solid var(--line); } label { display:block; font-size:13px; font-weight:700; margin:14px 0 6px; } input,select { width:100%; border:1px solid #bfcab8; border-radius:10px; padding:12px; font:inherit; background:#fff; } form .button { width:100%; margin-top:21px; } #form-message { min-height:23px; margin:12px 0 0; color:var(--leaf); font-weight:700; font-size:14px; }
     footer { padding:35px 0; background:#e8eadc; font-size:14px; } .foot { display:flex; justify-content:space-between; gap:16px; align-items:center; } .social { display:flex; gap:15px; text-decoration:underline; }
     @media (max-width:780px) { nav { display:none; } .hero { padding-top:48px; } .hero-grid,.about-grid,.events-grid,.join-grid { grid-template-columns:1fr; gap:33px; } .art { height:340px; } .cards { grid-template-columns:1fr; } .section-head { display:block; } .section-head .lead { margin-top:18px; } .event { grid-template-columns:55px 1fr; } .event .button { display:none; } .statline { gap:15px; } .foot { align-items:flex-start; flex-direction:column; } }
+
+    /* ЛР5: читаемые кнопки, фокус и мобильная навигация. */
+    section[id] { scroll-margin-top:100px; }
+    a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid var(--clay); outline-offset:4px; }
+    .events .button.alt { color:#fff; border-color:var(--lime); }
+    .events .button.alt:hover { color:var(--ink); background:var(--lime); }
+    .menu-toggle { display:none; }
+    @media(max-width:780px) {
+      .nav { flex-wrap:wrap; gap:12px; padding:12px 0; }
+      .brand { font-size:14px; }
+      .nav>.button { display:none; }
+      .menu-toggle { display:block; background:transparent; border:1px solid var(--ink); color:var(--ink); border-radius:9px; padding:10px 14px; font:inherit; cursor:pointer; }
+      nav.is-open { display:flex; flex-wrap:wrap; width:100%; gap:12px 20px; padding:8px 0; }
+      .event .button { display:inline-flex; grid-column:2; justify-self:start; font-size:13px; padding:8px 13px; }
+      section[id] { scroll-margin-top:160px; }
+    }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .button { transition:none; } }
   </style>
 </head>
 <body>
-  <header><div class="wrap nav"><a class="brand" href="#top"><span class="mark"></span>ГОРОДСКОЙ САД</a><nav><a href="#about">О клубе</a><a href="#why">Чем занимаемся</a><a href="#events">События</a><a href="#join">Участвовать</a></nav><a class="button" href="#join">Присоединиться</a></div></header>
+  <header><div class="wrap nav"><a class="brand" href="#top"><span class="mark"></span>ГОРОДСКОЙ САД</a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button><nav id="site-nav"><a href="#about">О клубе</a><a href="#why">Чем занимаемся</a><a href="#events">События</a><a href="#join">Участвовать</a></nav><a class="button" href="#join">Присоединиться</a></div></header>
   <main id="top">
     <section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">Студенческий эко-клуб · Санкт-Петербург</div><h1>Выращиваем<br>город, в котором<br>хочется жить</h1><p>Объединяем студентов, соседей и инициативы, чтобы возвращать зелень во дворы, на крыши и в университетскую среду.</p><div class="actions"><a class="button" href="#join">Стать участником</a><a class="button alt" href="#events">Ближайшие события ↓</a></div><div class="statline"><div><strong>36</strong>участников</div><div><strong>12</strong>проектов</div><div><strong>1 800</strong>растений</div></div></div><div class="art" aria-label="Иллюстрация городского сада"><div class="building"></div><div class="plant"></div><div class="hill one"></div><div class="hill two"></div></div></div></section>
     <section id="about" class="about"><div class="wrap about-grid"><div><div class="eyebrow">О проекте</div><h2>Маленькие действия меняют городскую среду</h2><p>«Городской сад» — открытое сообщество для тех, кто хочет учиться, действовать руками и видеть результат рядом с домом. Мы проводим посадки, собираем идеи и поддерживаем локальные команды.</p></div><div><p class="quote">«Не ждать идеального парка, а начать с клумбы у своего подъезда».</p><div class="numbers"><div class="number"><b>4</b>зелёные точки на карте района</div><div class="number"><b>8</b>практических встреч за сезон</div><div class="number"><b>3</b>направления участия</div><div class="number"><b>0 ₽</b>участие для студентов</div></div></div></div></section>
@@ -35,6 +52,13 @@
   </main>
   <footer><div class="wrap foot"><span class="brand"><span class="mark"></span>ГОРОДСКОЙ САД</span><span>Учимся заботиться о городе вместе · 2026</span><div class="social"><a href="#top">VK</a><a href="#top">Telegram</a></div></div></footer>
   <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const siteNav = document.getElementById('site-nav');
+    function closeMenu() { siteNav.classList.remove('is-open'); menuToggle.setAttribute('aria-expanded','false'); }
+    menuToggle.addEventListener('click', () => { const open = siteNav.classList.toggle('is-open'); menuToggle.setAttribute('aria-expanded',String(open)); });
+    siteNav.addEventListener('click', event => { if(event.target.closest('a')) closeMenu(); });
+    document.addEventListener('keydown', event => { if(event.key === 'Escape') { closeMenu(); if(document.activeElement.closest('#site-nav')) menuToggle.focus(); } });
+
     document.getElementById('join-form').addEventListener('submit', function(e) { e.preventDefault(); document.getElementById('form-message').textContent = 'Спасибо! Демонстрационная заявка принята.'; this.reset(); });
   </script>
 </body>
