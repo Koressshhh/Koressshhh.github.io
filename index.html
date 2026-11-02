@@ -5,48 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Городской сад — студенческий клуб для тех, кто хочет делать город зеленее.">
   <title>Городской сад — студенческий эко-клуб</title>
-  <style>
-    :root { --ink:#18352b; --leaf:#3f7d59; --lime:#b9de79; --cream:#f7f4e9; --paper:#fffdf7; --clay:#c7774e; --line:#d9dfcb; }
-    * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; font-family:Arial, Helvetica, sans-serif; color:var(--ink); background:var(--cream); line-height:1.5; }
-    a { color:inherit; text-decoration:none; } .wrap { width:min(1120px, calc(100% - 40px)); margin:auto; }
-    header { position:sticky; top:0; z-index:5; background:rgba(247,244,233,.94); backdrop-filter:blur(12px); border-bottom:1px solid rgba(24,53,43,.08); }
-    .nav { min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:24px; } .brand { font-weight:800; letter-spacing:.02em; display:flex; align-items:center; gap:9px; } .mark { width:28px; height:28px; border-radius:50% 50% 50% 8px; background:var(--leaf); transform:rotate(-35deg); position:relative; } .mark:after { content:""; position:absolute; width:2px; height:18px; background:#fff; left:13px; top:6px; transform:rotate(35deg); }
-    nav { display:flex; gap:22px; font-size:14px; font-weight:700; } nav a:hover { color:var(--leaf); }
-    .button { display:inline-flex; align-items:center; justify-content:center; padding:13px 19px; border-radius:999px; background:var(--ink); color:#fff; font-weight:700; border:2px solid var(--ink); cursor:pointer; transition:.2s; } .button:hover { transform:translateY(-2px); background:var(--leaf); border-color:var(--leaf); } .button.alt { background:transparent; color:var(--ink); }
-    .hero { padding:82px 0 70px; overflow:hidden; } .hero-grid { display:grid; grid-template-columns:1.1fr .9fr; align-items:center; gap:54px; } .eyebrow { color:var(--leaf); font-weight:800; text-transform:uppercase; font-size:12px; letter-spacing:.12em; } h1 { margin:12px 0 22px; font-family:Georgia,serif; font-size:clamp(44px,6vw,78px); line-height:1.02; letter-spacing:-.045em; } .hero p { max-width:560px; font-size:18px; } .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; } .statline { display:flex; gap:27px; margin-top:43px; font-size:13px; } .statline strong { display:block; font-size:26px; font-family:Georgia,serif; }
-    .art { height:460px; position:relative; border-radius:48% 52% 44% 56% / 44% 42% 58% 56%; background:linear-gradient(145deg,#dcebb9,#a9d57b); isolation:isolate; } .art:before { content:""; position:absolute; width:180px; height:180px; border-radius:50%; background:#ffe27d; right:55px; top:48px; } .hill { position:absolute; border-radius:50% 50% 0 0; bottom:0; } .hill.one { width:110%; height:45%; background:#76ae63; left:-5%; } .hill.two { width:80%; height:31%; background:#4b8a57; right:-12%; } .building { position:absolute; bottom:103px; left:22%; width:125px; height:174px; border-radius:14px 14px 0 0; background:var(--clay); box-shadow:32px 0 0 -5px #e79b71; } .building:before { content:""; position:absolute; inset:31px 21px auto; height:13px; background:repeating-linear-gradient(90deg,#f8e9ba 0 13px,transparent 13px 27px); box-shadow:0 32px #f8e9ba, 0 64px #f8e9ba; } .plant { position:absolute; bottom:90px; right:17%; width:16px; height:120px; background:var(--ink); border-radius:9px; transform:rotate(8deg); } .plant:before,.plant:after { content:""; position:absolute; width:67px; height:35px; border-radius:100% 0 100% 0; background:var(--leaf); } .plant:before { right:7px; top:18px; transform:rotate(-35deg); } .plant:after { left:7px; top:52px; transform:rotate(35deg); }
-    section { padding:92px 0; } .section-head { display:flex; justify-content:space-between; gap:25px; align-items:end; margin-bottom:35px; } h2 { font-family:Georgia,serif; font-size:clamp(32px,4vw,50px); line-height:1.1; letter-spacing:-.035em; margin:8px 0 0; } .lead { max-width:480px; margin:0; }
-    .about { background:var(--paper); } .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; } .quote { border-left:3px solid var(--lime); padding:7px 0 7px 22px; font-family:Georgia,serif; font-size:27px; line-height:1.2; } .numbers { display:grid; grid-template-columns:repeat(2,1fr); gap:15px; } .number { padding:24px; border:1px solid var(--line); border-radius:17px; background:var(--cream); } .number b { display:block; font-size:31px; font-family:Georgia,serif; color:var(--leaf); }
-    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; } .card { padding:28px; border-radius:20px; background:var(--paper); border:1px solid var(--line); } .icon { width:43px; height:43px; display:grid; place-items:center; border-radius:50%; background:var(--lime); margin-bottom:18px; font-size:22px; } h3 { margin:0 0 8px; font-size:20px; } .card p { margin:0; color:#496156; }
-    .events { background:var(--ink); color:#fff; } .events .eyebrow { color:var(--lime); } .events-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:55px; align-items:start; } .event { display:grid; grid-template-columns:70px 1fr auto; gap:18px; align-items:center; padding:19px 0; border-bottom:1px solid rgba(255,255,255,.22); } .date { font-weight:800; color:var(--lime); text-align:center; line-height:1.05; } .date b { display:block; font-size:25px; } .event p,.event h3 { margin:0; } .event p { font-size:13px; color:#d4e0d6; }
-    .join-grid { display:grid; grid-template-columns:1fr .85fr; gap:54px; align-items:center; } form { padding:28px; border-radius:22px; background:var(--paper); border:1px solid var(--line); } label { display:block; font-size:13px; font-weight:700; margin:14px 0 6px; } input,select { width:100%; border:1px solid #bfcab8; border-radius:10px; padding:12px; font:inherit; background:#fff; } form .button { width:100%; margin-top:21px; } #form-message { min-height:23px; margin:12px 0 0; color:var(--leaf); font-weight:700; font-size:14px; }
-    footer { padding:35px 0; background:#e8eadc; font-size:14px; } .foot { display:flex; justify-content:space-between; gap:16px; align-items:center; } .social { display:flex; gap:15px; text-decoration:underline; }
-    @media (max-width:780px) { nav { display:none; } .hero { padding-top:48px; } .hero-grid,.about-grid,.events-grid,.join-grid { grid-template-columns:1fr; gap:33px; } .art { height:340px; } .cards { grid-template-columns:1fr; } .section-head { display:block; } .section-head .lead { margin-top:18px; } .event { grid-template-columns:55px 1fr; } .event .button { display:none; } .statline { gap:15px; } .foot { align-items:flex-start; flex-direction:column; } }
-
-    /* ЛР5: читаемые кнопки, фокус и мобильная навигация. */
-    section[id] { scroll-margin-top:100px; }
-    a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid var(--clay); outline-offset:4px; }
-    .events .button.alt { color:#fff; border-color:var(--lime); }
-    .events .button.alt:hover { color:var(--ink); background:var(--lime); }
-    .menu-toggle { display:none; }
-    @media(max-width:780px) {
-      .nav { flex-wrap:wrap; gap:12px; padding:12px 0; }
-      .brand { font-size:14px; }
-      .nav>.button { display:none; }
-      .menu-toggle { display:block; background:transparent; border:1px solid var(--ink); color:var(--ink); border-radius:9px; padding:10px 14px; font:inherit; cursor:pointer; }
-      nav.is-open { display:flex; flex-wrap:wrap; width:100%; gap:12px 20px; padding:8px 0; }
-      .event .button { display:inline-flex; grid-column:2; justify-self:start; font-size:13px; padding:8px 13px; }
-      section[id] { scroll-margin-top:160px; }
-    }
-    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .button { transition:none; } }
-    .photo-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
-    .photo-grid figure { margin:0; border:1px solid var(--line); border-radius:20px; overflow:hidden; background:var(--cream); }
-    .photo-grid img { display:block; width:100%; height:270px; object-fit:cover; }
-    .photo-grid figcaption { padding:22px; } .photo-grid b,.photo-grid span { display:block; }
-    .photo-grid span { margin-top:8px; color:#496156; } .photo-credit { font-size:12px; margin-top:20px; }
-    .photo-credit a { text-decoration:underline; }
-    @media(max-width:780px) { .photo-grid { grid-template-columns:1fr; } .photo-grid img { height:300px; } }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header><div class="wrap nav"><a class="brand" href="#top"><span class="mark"></span>ГОРОДСКОЙ САД</a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button><nav id="site-nav"><a href="#about">О клубе</a><a href="#why">Чем занимаемся</a><a href="#events">События</a><a href="#join">Участвовать</a></nav><a class="button" href="#join">Присоединиться</a></div></header>
@@ -90,3 +49,4 @@
   </script>
 </body>
 </html>
+
