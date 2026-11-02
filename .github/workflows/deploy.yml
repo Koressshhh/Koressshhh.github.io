@@ -17,7 +17,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+      - name: Check HTML, CSS and local assets
+        run: python3 scripts/check_site.py
       - uses: actions/configure-pages@v5
       - name: Build static site
         run: |
@@ -25,7 +27,7 @@ jobs:
           cp index.html style.css lab5-before.html _site/
           cp -R assets _site/
           touch _site/.nojekyll
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
       - uses: actions/deploy-pages@v4
